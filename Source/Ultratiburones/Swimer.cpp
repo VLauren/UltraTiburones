@@ -25,6 +25,8 @@ ASwimer::ASwimer()
 
 	CollisionBox->SetVisibility(true);
 	CollisionBox->SetHiddenInGame(false);
+
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 
@@ -48,6 +50,10 @@ void ASwimer::Tick(float DeltaTime)
 void ASwimer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	// input de camara
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 }
 

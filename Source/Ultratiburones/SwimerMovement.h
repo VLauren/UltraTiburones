@@ -3,16 +3,32 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/MovementComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 #include "SwimerMovement.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ULTRATIBURONES_API USwimerMovement : public UMovementComponent
+class ULTRATIBURONES_API USwimerMovement : public UPawnMovementComponent
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+private:
+	class USkeletalMeshComponent* Mesh;
+	class UStaticMeshComponent* ProvisionalMesh;
+
+	FRotator StartMeshRotation;
+	FRotator CurrentRotation;
 	
 	
 };

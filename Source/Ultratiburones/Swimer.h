@@ -43,7 +43,7 @@ public:
 	// ==========================================
 	// Propiedades
 
-	float MovementSpeed = 500;
+	static const float MOVEMENT_SPEED;
 
 	UPROPERTY(VisibleAnywhere)
 		class USkeletalMeshComponent* Mesh = nullptr;
@@ -60,7 +60,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	// Metodos de input
+	void MoveForward(float AxisValue);
+	void MoveRight(float AxisValue);
 };
 
 

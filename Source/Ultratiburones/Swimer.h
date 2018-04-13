@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SwimerMovement.h"
@@ -45,6 +47,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 		class USkeletalMeshComponent* Mesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere)
+		class UStaticMeshComponent* ProvisionalMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
 		class USwimerMovement* Movement;

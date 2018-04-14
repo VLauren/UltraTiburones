@@ -102,7 +102,7 @@ void AShark::Tick(float DeltaTime)
 		if (distance <= 400 && angle <= SIGHT_ANGLE)
 		{
 			AItem::CollectedItems = 0;
-			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/Map"));
+			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/LoseScreen"));
 		}
 
 		Animate(ESharkAnimState::AS_FAST);

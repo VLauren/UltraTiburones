@@ -65,7 +65,7 @@ void AItem::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 		if (CollectedItems >= 3)
 		{
 			CollectedItems = 0;
-			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/Map"));
+			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/WinScreen"));
 		}
 		else
 			Destroy();

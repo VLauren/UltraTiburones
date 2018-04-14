@@ -54,6 +54,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		class USwimerMovement* Movement;
 
+	static ASwimer* Instance;
+
 	// ==========================================
 	// Metodos
 

@@ -7,6 +7,7 @@ void USwimerMovement::BeginPlay()
 	Super::BeginPlay();
 
 	ProvisionalMesh = ((ASwimer*)GetOwner())->ProvisionalMesh;
+	Mesh = ((ASwimer*)GetOwner())->Mesh;
 
 	StartMeshRotation = ProvisionalMesh->RelativeRotation;
 }
@@ -19,8 +20,7 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		return;
 
 	// Calculo el vector de movimiento
-	FVector movimientoEsteFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * 502;
-	UE_LOG(LogTemp, Warning, TEXT("SwimTick %f"), movimientoEsteFrame.X);
+	FVector movimientoEsteFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * ASwimer::MOVEMENT_SPEED;
 	
 	if (!movimientoEsteFrame.IsNearlyZero())
 	{
@@ -50,7 +50,11 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		// FRotator TargetRotation = ctrlRot + StartMeshRotation;
 
 		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
-		ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+
+		if(ProvisionalMesh != nullptr)
+			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+		// if(Mesh != nullptr)
+			// Mesh->SetRelativeRotation(CurrentRotation);
 
 		// TODO Estado de animacion -> nadar
 	}

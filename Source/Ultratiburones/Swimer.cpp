@@ -1,6 +1,7 @@
 #include "Swimer.h"
 
 const float ASwimer::MOVEMENT_SPEED = 500.0f;
+ASwimer* ASwimer::Instance;
 
 // CONSTRUCTOR
 ASwimer::ASwimer()
@@ -19,7 +20,7 @@ ASwimer::ASwimer()
 
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
 	CameraArm->SetupAttachment(RootComponent);
-	CameraArm->TargetArmLength = 700.0f;
+	CameraArm->TargetArmLength = 800.0f;
 	CameraArm->bUsePawnControlRotation = true;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -60,9 +61,9 @@ ASwimer::ASwimer()
 	Movement = CreateDefaultSubobject<USwimerMovement>(TEXT("Movimiento"));
 	Movement->UpdatedComponent = RootComponent;
 
-
-	CollisionBox->SetVisibility(true);
-	CollisionBox->SetHiddenInGame(false);
+	// visibilidad de colider
+	CollisionBox->SetVisibility(false);
+	CollisionBox->SetHiddenInGame(true);
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 } 
@@ -72,6 +73,8 @@ void ASwimer::BeginPlay()
 	Super::BeginPlay();
 
 	Movement->UpdatedComponent = RootComponent;
+
+	Instance = this;
 }
 
 //====================================================================
@@ -102,15 +105,6 @@ void ASwimer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ASwimer::MoveForward(float AxisValue)
 {
-	if (Movement)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Forwqrd %f"), AxisValue);
-		if (Movement->UpdatedComponent == RootComponent)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Foasdfasdfasdfasdfrwqrd %f"), AxisValue);
-		}
-	}
-
 	if (Movement && (Movement->UpdatedComponent == RootComponent))
 	{
 		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorForwardVector()) * AxisValue);

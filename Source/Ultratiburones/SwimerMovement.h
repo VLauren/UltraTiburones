@@ -24,8 +24,8 @@ public:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 private:
-	class USkeletalMeshComponent* Mesh;
-	class UStaticMeshComponent* ProvisionalMesh;
+	class USkeletalMeshComponent* Mesh = nullptr;
+	class UStaticMeshComponent* ProvisionalMesh = nullptr;
 
 	FRotator StartMeshRotation;
 	FRotator CurrentRotation;

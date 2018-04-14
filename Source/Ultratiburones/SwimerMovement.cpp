@@ -51,7 +51,21 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_SWIM);
 	}
 	else
+	{
 		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_IDLE);
+
+		// Rotacion de la malla
+		// FRotator ctrlRot = movimientoEsteFrame.Rotation();
+
+		// FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
+		FRotator TargetRotation = FRotator(0, CurrentRotation.Yaw, 0);
+		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
+
+		if(ProvisionalMesh != nullptr)
+			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+		if(Mesh != nullptr)
+			Mesh->SetRelativeRotation(CurrentRotation);
+	}
 }
 
 

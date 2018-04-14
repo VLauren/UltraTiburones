@@ -72,13 +72,20 @@ void ASwimer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Instance = this;
+
 	Movement->UpdatedComponent = RootComponent;
 
 	AnimState = ESwimerAnimState::AS_IDLE;
 	if(Mesh != nullptr)
 		Mesh->PlayAnimation(AnimIdle, true);
 
-	Instance = this;
+	// MusicBase->VolumeMultiplier = 0;
+	// MusicAdditional->VolumeMultiplier = 1;
+	// UGameplayStatics::PlaySound2D(GetWorld(), MusicBase);
+	// UGameplayStatics::PlaySound2D(GetWorld(), MusicAdditional);
+
+
 }
 
 //====================================================================
@@ -138,5 +145,5 @@ void ASwimer::Animate(ESwimerAnimState Anim)
 	if (Anim == ESwimerAnimState::AS_IDLE && Mesh != nullptr)
 		Mesh->PlayAnimation(AnimIdle, true);
 	if (Anim == ESwimerAnimState::AS_SWIM && Mesh != nullptr)
-		Mesh->PlayAnimation(AnimIdle, true);
+		Mesh->PlayAnimation(AnimSwim, true);
 }

@@ -1,10 +1,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Sound/SoundCue.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SwimerMovement.h"
@@ -73,6 +75,12 @@ public:
 		class UAnimationAsset* AnimIdle;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 		class UAnimationAsset* AnimSwim;
+
+	// Musicas
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
+		class USoundCue* MusicBase;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
+		class USoundCue* MusicAdditional;
 
 	ESwimerAnimState AnimState;
 

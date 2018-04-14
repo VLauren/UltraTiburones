@@ -3,6 +3,7 @@
 #include "Shark.h"
 #include "Swimer.h"
 #include "Item.h"
+#include "SharkVolumeChange.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 const float AShark::MOVEMENT_SPEED = 300.0f;
@@ -106,6 +107,9 @@ void AShark::Tick(float DeltaTime)
 		}
 
 		Animate(ESharkAnimState::AS_FAST);
+
+		UE_LOG(LogTemp, Warning, TEXT("SetVolume!"));
+		USharkVolumeChange::Instance->SetVolume(1.0f);
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)
 	{
@@ -126,7 +130,7 @@ void AShark::Tick(float DeltaTime)
 		Animate(ESharkAnimState::AS_SLOW);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("STATE: %s"), SharkState == ESharkState::ES_CHASE ? TEXT("CHASE") : TEXT("PATROL"));
+	// UE_LOG(LogTemp, Warning, TEXT("STATE: %s"), SharkState == ESharkState::ES_CHASE ? TEXT("CHASE") : TEXT("PATROL"));
 }
 
 bool AShark::CheckSight()

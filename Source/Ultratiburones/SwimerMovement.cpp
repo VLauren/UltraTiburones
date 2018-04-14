@@ -26,6 +26,9 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 	{
 		FHitResult Hit;
 
+		FRotator forward = ((ASwimer*)GetOwner())->CameraArm->RelativeRotation;
+		movimientoEsteFrame = forward.RotateVector(movimientoEsteFrame);
+
 		// Movimiento
 		SafeMoveUpdatedComponent(movimientoEsteFrame, UpdatedComponent->GetComponentRotation(), true, Hit);
 

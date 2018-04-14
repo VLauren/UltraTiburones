@@ -113,13 +113,14 @@ void ASwimer::MoveForward(float AxisValue)
 
 	if (Movement && (Movement->UpdatedComponent == RootComponent))
 	{
-		Movement->AddInputVector(FRotator(0, GetControlRotation().Yaw, 0).RotateVector(GetActorForwardVector()) * AxisValue);
+		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorForwardVector()) * AxisValue);
 	}
 }
 
 void ASwimer::MoveRight(float AxisValue)
 {
 	if (Movement && (Movement->UpdatedComponent == RootComponent))
-		Movement->AddInputVector(FRotator(0, GetControlRotation().Yaw, 0).RotateVector(GetActorRightVector()) * AxisValue);
+		// Movement->AddInputVector(FRotator(0, GetControlRotation().Yaw, 0).RotateVector(GetActorRightVector()) * AxisValue);
+		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorRightVector()) * AxisValue);
 }
 

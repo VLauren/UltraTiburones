@@ -27,9 +27,6 @@ class ULTRATIBURONES_API ASwimer : public APawn
 		class UBoxComponent* CollisionBox;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		class USpringArmComponent* CameraArm;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* Camera;
 
 protected:
@@ -44,6 +41,9 @@ public:
 	// Propiedades
 
 	static const float MOVEMENT_SPEED;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		class USpringArmComponent* CameraArm;
 
 	UPROPERTY(VisibleAnywhere)
 		class USkeletalMeshComponent* Mesh = nullptr;

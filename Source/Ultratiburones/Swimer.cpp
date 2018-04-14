@@ -102,6 +102,7 @@ void ASwimer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// input de movimiento (controller)
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASwimer::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwimer::MoveForward);
+	PlayerInputComponent->BindAxis("MoveUp", this, &ASwimer::MoveUp);
 }
 
 
@@ -120,6 +121,12 @@ void ASwimer::MoveRight(float AxisValue)
 	if (Movement && (Movement->UpdatedComponent == RootComponent))
 		// Movement->AddInputVector(FRotator(0, GetControlRotation().Yaw, 0).RotateVector(GetActorRightVector()) * AxisValue);
 		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorRightVector()) * AxisValue);
+}
+
+void ASwimer::MoveUp(float AxisValue)
+{
+	if (Movement && (Movement->UpdatedComponent == RootComponent))
+		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorUpVector()) * AxisValue);
 }
 
 void ASwimer::Animate(ESwimerAnimState Anim)

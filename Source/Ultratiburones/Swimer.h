@@ -66,6 +66,7 @@ public:
 	// Metodos de input
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue); 
+	void MoveUp(float AxisValue); 
 	
 	//Animaciones
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)

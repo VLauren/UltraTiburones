@@ -79,6 +79,8 @@ void AShark::BeginPlay()
 		PatrolB = GetActorLocation() + FVector(500, 0, 0);
 
 	SharkState = ESharkState::ES_PATROL_B;
+
+	Mesh->PlayAnimation(AnimSwimSlow, true);
 }
 
 // Called every frame
@@ -102,6 +104,8 @@ void AShark::Tick(float DeltaTime)
 			AItem::CollectedItems = 0;
 			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/Map"));
 		}
+
+		Animate(ESharkAnimState::AS_FAST);
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)
 	{
@@ -118,16 +122,11 @@ void AShark::Tick(float DeltaTime)
 	{
 		if (CheckSight())
 			SharkState = ESharkState::ES_CHASE;
+
+		Animate(ESharkAnimState::AS_SLOW);
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("STATE: %s"), SharkState == ESharkState::ES_CHASE ? TEXT("CHASE") : TEXT("PATROL"));
-}
-
-// Called to bind functionality to input
-void AShark::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 bool AShark::CheckSight()
@@ -146,3 +145,15 @@ bool AShark::CheckSight()
 	return distance <= SIGHT_DISTANCE && angle <= SIGHT_ANGLE;
 }
 
+
+void AShark::Animate(ESharkAnimState Anim)
+{
+	if (AnimState == Anim)
+		return;
+
+	AnimState = Anim;
+	if (Anim == ESharkAnimState::AS_SLOW && Mesh != nullptr)
+		Mesh->PlayAnimation(AnimSwimSlow, true);
+	if (Anim == ESharkAnimState::AS_FAST && Mesh != nullptr)
+		Mesh->PlayAnimation(AnimSwimFast, true);
+}

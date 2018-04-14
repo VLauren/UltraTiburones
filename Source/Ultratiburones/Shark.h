@@ -20,6 +20,13 @@ enum class ESharkState : uint8
 	ES_RETURN
 };
 
+UENUM()
+enum class ESharkAnimState : uint8
+{
+	AS_SLOW,
+	AS_FAST
+};
+
 UCLASS()
 class ULTRATIBURONES_API AShark : public APawn
 {
@@ -40,8 +47,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	UPROPERTY(EditAnywhere)
 		AActor* Waypoint;
 
@@ -60,4 +65,14 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		ESharkState SharkState;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+		class UAnimationAsset* AnimSwimSlow;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+		class UAnimationAsset* AnimSwimFast;
+
+	ESharkAnimState AnimState;
+
+	void Animate(ESharkAnimState Anim);
 };

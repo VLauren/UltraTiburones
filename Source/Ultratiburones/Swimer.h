@@ -65,7 +65,17 @@ public:
 
 	// Metodos de input
 	void MoveForward(float AxisValue);
-	void MoveRight(float AxisValue);
+	void MoveRight(float AxisValue); 
+	
+	//Animaciones
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+		class UAnimationAsset* AnimIdle;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+		class UAnimationAsset* AnimSwim;
+
+	ESwimerAnimState AnimState;
+
+	void Animate(ESwimerAnimState Anim);
 };
 
 

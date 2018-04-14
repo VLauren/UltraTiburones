@@ -74,6 +74,10 @@ void ASwimer::BeginPlay()
 
 	Movement->UpdatedComponent = RootComponent;
 
+	AnimState = ESwimerAnimState::AS_IDLE;
+	if(Mesh != nullptr)
+		Mesh->PlayAnimation(AnimIdle, true);
+
 	Instance = this;
 }
 
@@ -118,3 +122,14 @@ void ASwimer::MoveRight(float AxisValue)
 		Movement->AddInputVector(GetControlRotation().RotateVector(GetActorRightVector()) * AxisValue);
 }
 
+void ASwimer::Animate(ESwimerAnimState Anim)
+{
+	if (AnimState == Anim)
+		return;
+
+	AnimState = Anim;
+	if (Anim == ESwimerAnimState::AS_IDLE && Mesh != nullptr)
+		Mesh->PlayAnimation(AnimIdle, true);
+	if (Anim == ESwimerAnimState::AS_SWIM && Mesh != nullptr)
+		Mesh->PlayAnimation(AnimIdle, true);
+}

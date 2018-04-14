@@ -37,27 +37,21 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 			SlideAlongSurface(movimientoEsteFrame, 1.f - Hit.Time, Hit.Normal, Hit);
 
 		// Rotacion de la malla
-		// FRotator TargetRotation = movimientoEsteFrame.Rotation() + StartMeshRotation;
-		// CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
-		// ProvisionalMesh->SetRelativeRotation(CurrentRotation);
-
-		// FRotator ctrlRot = (((ASwimer*)GetOwner())->GetControlRotation().Quaternion() * movimientoEsteFrame.Rotation().Quaternion()).Rotator();
-		// FRotator ctrlRot = FQuat
-		// FRotator ctrlRot = (((ASwimer*)GetOwner())->GetControlRotation().Quaternion() * movimientoEsteFrame.Rotation().Quaternion()).Rotator();
 		FRotator ctrlRot = movimientoEsteFrame.Rotation();
 
 		FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
-		// FRotator TargetRotation = ctrlRot + StartMeshRotation;
 
 		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
 
 		if(ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
-		// if(Mesh != nullptr)
-			// Mesh->SetRelativeRotation(CurrentRotation);
+		if(Mesh != nullptr)
+			Mesh->SetRelativeRotation(CurrentRotation);
 
-		// TODO Estado de animacion -> nadar
+		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_SWIM);
 	}
+	else
+		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_IDLE);
 }
 
 

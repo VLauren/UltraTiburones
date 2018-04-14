@@ -2,6 +2,8 @@
 
 #include "Shark.h"
 #include "Swimer.h"
+#include "Item.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 const float AShark::MOVEMENT_SPEED = 300.0f;
 
@@ -88,6 +90,18 @@ void AShark::Tick(float DeltaTime)
 	{
 		if (FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation()) < STOP_CHASE_DISTANCE)
 			SharkState = ESharkState::ES_PATROL_A;
+
+		// Condicion de perder
+		float distance = FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation());
+		FVector DirA = Movement->direccion;
+		FVector DirB = (ASwimer::Instance->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+		float angle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(DirA, DirB)));
+
+		if (distance <= 400 && angle <= SIGHT_ANGLE)
+		{
+			AItem::CollectedItems = 0;
+			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/Map"));
+		}
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)
 	{

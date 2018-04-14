@@ -108,7 +108,7 @@ void AShark::Tick(float DeltaTime)
 
 		Animate(ESharkAnimState::AS_FAST);
 
-		UE_LOG(LogTemp, Warning, TEXT("SetVolume!"));
+		// UE_LOG(LogTemp, Warning, TEXT("SetVolume!"));
 		USharkVolumeChange::Instance->SetVolume(1.0f);
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)

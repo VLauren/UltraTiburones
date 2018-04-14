@@ -1,4 +1,6 @@
 #include "Swimer.h"
+#include "Item.h"
+#include "Engine/Engine.h"
 
 const float ASwimer::MOVEMENT_SPEED = 500.0f;
 ASwimer* ASwimer::Instance;
@@ -96,6 +98,11 @@ void ASwimer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (GEngine)
+	{
+		FString msg = FString::Printf(TEXT("%d/%d"),AItem::CollectedItems, AItem::ItemsToCollect);
+		GEngine->AddOnScreenDebugMessage(1, 0.0f, FColor::Green, msg);
+	}
 }
 
 void ASwimer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -111,7 +118,6 @@ void ASwimer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASwimer::MoveForward);
 	PlayerInputComponent->BindAxis("MoveUp", this, &ASwimer::MoveUp);
 }
-
 
 
 

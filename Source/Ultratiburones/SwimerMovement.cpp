@@ -59,7 +59,7 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 
 		// FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
 		FRotator TargetRotation = FRotator(0, CurrentRotation.Yaw, 0);
-		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
+		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.005f);
 
 		if(ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);

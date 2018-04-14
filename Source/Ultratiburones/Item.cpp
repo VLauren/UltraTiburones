@@ -5,6 +5,7 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 int AItem::CollectedItems = 0;
+int AItem::ItemsToCollect = 0;
 
 // Sets default values
 AItem::AItem()
@@ -43,6 +44,7 @@ void AItem::BeginPlay()
 
 	// evento de overlap del hitbox
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnOverlap);
+	ItemsToCollect++;
 
 }
 
@@ -62,7 +64,7 @@ void AItem::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAct
 			CollectedItems++;
 
 		// Ganar
-		if (CollectedItems >= 3)
+		if (CollectedItems >= ItemsToCollect)
 		{
 			CollectedItems = 0;
 			UGameplayStatics::OpenLevel(this, TEXT("/Game/Level/WinScreen"));

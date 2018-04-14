@@ -32,6 +32,8 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	bool CheckSight();
+
 public:	
 
 	AShark();

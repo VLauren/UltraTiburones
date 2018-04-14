@@ -1,8 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Shark.h"
+#include "Swimer.h"
 
 const float AShark::MOVEMENT_SPEED = 300.0f;
+
+const float SIGHT_ANGLE = 45;
+const float SIGHT_DISTANCE = 1500;
+const float STOP_CHASE_DISTANCE = 2000;
+
 
 // Sets default values
 AShark::AShark()
@@ -69,6 +75,8 @@ void AShark::BeginPlay()
 		PatrolB = Waypoint->GetActorLocation();
 	else
 		PatrolB = GetActorLocation() + FVector(500, 0, 0);
+
+	SharkState = ESharkState::ES_PATROL_B;
 }
 
 // Called every frame
@@ -78,13 +86,27 @@ void AShark::Tick(float DeltaTime)
 
 	if (SharkState == ESharkState::ES_CHASE)
 	{
+		if (FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation()) < STOP_CHASE_DISTANCE)
+			SharkState = ESharkState::ES_PATROL_A;
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)
 	{
+		if (FVector::Dist(GetActorLocation(), PatrolA) <= 100)
+			SharkState = ESharkState::ES_PATROL_B;
 	}
 	if (SharkState == ESharkState::ES_PATROL_B)
 	{
+		if(FVector::Dist(GetActorLocation(), PatrolB) <= 100)
+			SharkState = ESharkState::ES_PATROL_A;
 	}
+
+	if (SharkState == ESharkState::ES_PATROL_B || SharkState == ESharkState::ES_PATROL_A)
+	{
+		if (CheckSight())
+			SharkState = ESharkState::ES_CHASE;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("STATE: %s"), SharkState == ESharkState::ES_CHASE ? TEXT("CHASE") : TEXT("PATROL"));
 }
 
 // Called to bind functionality to input
@@ -92,5 +114,21 @@ void AShark::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+bool AShark::CheckSight()
+{
+	float distance = FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation());
+
+	// FVector DirA = RootComponent->GetComponentRotation().Vector().GetSafeNormal();
+	FVector DirA = Movement->direccion;
+
+	FVector DirB = (ASwimer::Instance->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+
+	float angle = FMath::RadiansToDegrees(FMath::Acos(FVector::DotProduct(DirA,DirB)));
+
+	// UE_LOG(LogTemp, Warning, TEXT("ANGLE: %f, DISTANCE: %f"), angle, distance);
+
+	return distance <= SIGHT_DISTANCE && angle <= SIGHT_ANGLE;
 }
 

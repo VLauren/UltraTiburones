@@ -32,5 +32,6 @@ private:
 	FRotator StartMeshRotation;
 	FRotator CurrentRotation;
 	
+	FVector Move;
 	
 };

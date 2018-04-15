@@ -1,6 +1,7 @@
 
 #include "SwimerMovement.h"
 #include "Swimer.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 void USwimerMovement::BeginPlay()
 {
@@ -16,6 +17,8 @@ void USwimerMovement::BeginPlay()
 		// StartMeshRotation = Arrow->RelativeRotation;
 	if(Mesh != nullptr)
 		StartMeshRotation = Mesh->RelativeRotation;
+
+	Move = FVector::ZeroVector;
 }
 
 void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -26,8 +29,17 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		return;
 
 	// Calculo el vector de movimiento
-	FVector movimientoEsteFrame = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * ASwimer::MOVEMENT_SPEED;
+	FVector movimientoDeseado = ConsumeInputVector().GetClampedToMaxSize(1.0f) * DeltaTime * ASwimer::MOVEMENT_SPEED;
+	// Move = movimientoDeseado;
+	Move = FMath::Lerp(Move, movimientoDeseado, 0.01f);
+
+	float fuerza = 0.6f;
+	float freq = 1.0f;
+	FVector Oscilacion = FVector(fuerza, fuerza, 0) * FMath::Sin(freq * UGameplayStatics::GetTimeSeconds(GetWorld()));
+
+	FVector movimientoEsteFrame = Move + Oscilacion;
 	
+	// Movimiento
 	if (!movimientoEsteFrame.IsNearlyZero())
 	{
 		FHitResult Hit;
@@ -41,20 +53,29 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		// Si chocamos con algo, me deslizo sobre el
 		if (Hit.IsValidBlockingHit())
 			SlideAlongSurface(movimientoEsteFrame, 1.f - Hit.Time, Hit.Normal, Hit);
+	}
+	else
+	{
+		
+	}
 
+
+	// Animacion
+	if (!movimientoDeseado.IsNearlyZero())
+	{
 		// Rotacion de la malla
-		FRotator ctrlRot = movimientoEsteFrame.Rotation();
+		FRotator ctrlRot = movimientoDeseado.Rotation();
 
 		FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
 		// FRotator TargetRotation = ctrlRot + StartMeshRotation;
 
-		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
+		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.02f);
 
-		if(ProvisionalMesh != nullptr)
+		if (ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
 		// if(Arrow != nullptr)
-			// Arrow->SetRelativeRotation(CurrentRotation);
-		if(Mesh != nullptr)
+		// Arrow->SetRelativeRotation(CurrentRotation);
+		if (Mesh != nullptr)
 			Mesh->SetRelativeRotation(CurrentRotation);
 
 		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_SWIM);
@@ -64,19 +85,21 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		((ASwimer*)GetOwner())->Animate(ESwimerAnimState::AS_IDLE);
 
 		// Rotacion de la malla
-		// FRotator ctrlRot = movimientoEsteFrame.Rotation();
+		// FRotator ctrlRot = movimientoDeseado.Rotation();
 
 		// FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
 		FRotator TargetRotation = FRotator(0, CurrentRotation.Yaw, 0);
 		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.005f);
 
-		if(ProvisionalMesh != nullptr)
+		if (ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
 		// if(Arrow != nullptr)
-			// Arrow->SetRelativeRotation(CurrentRotation);
-		if(Mesh != nullptr)
+		// Arrow->SetRelativeRotation(CurrentRotation);
+		if (Mesh != nullptr)
 			Mesh->SetRelativeRotation(CurrentRotation);
 	}
+
+
 }
 
 

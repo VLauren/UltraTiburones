@@ -11,7 +11,9 @@ void USharkMovement::BeginPlay()
 	ProvisionalMesh = ((AShark*)GetOwner())->ProvisionalMesh;
 	Mesh = ((AShark*)GetOwner())->Mesh;
 
-	StartMeshRotation = ProvisionalMesh->RelativeRotation;
+	// StartMeshRotation = ProvisionalMesh->RelativeRotation;
+	if(Mesh != nullptr)
+		StartMeshRotation = Mesh->RelativeRotation;
 }
 
 void USharkMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -60,8 +62,8 @@ void USharkMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 			FRotator TargetRotation = movimientoEsteFrame.Rotation() + StartMeshRotation;
 			CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.1f);
 
-			if(ProvisionalMesh != nullptr)
-				ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+			// if(ProvisionalMesh != nullptr)
+				// ProvisionalMesh->SetRelativeRotation(CurrentRotation);
 			if(Mesh != nullptr)
 				Mesh->SetRelativeRotation(CurrentRotation);
 		}

@@ -8,9 +8,9 @@
 
 const float AShark::MOVEMENT_SPEED = 300.0f;
 
-const float SIGHT_ANGLE = 45;
+const float SIGHT_ANGLE = 80;
 const float SIGHT_DISTANCE = 1500;
-const float STOP_CHASE_DISTANCE = 2000;
+const float STOP_CHASE_DISTANCE = 3000;
 
 
 // Sets default values
@@ -80,6 +80,7 @@ void AShark::BeginPlay()
 		PatrolB = GetActorLocation() + FVector(500, 0, 0);
 
 	SharkState = ESharkState::ES_PATROL_B;
+	AnimState = ESharkAnimState::AS_SLOW;
 
 	Mesh->PlayAnimation(AnimSwimSlow, true);
 }
@@ -91,8 +92,10 @@ void AShark::Tick(float DeltaTime)
 
 	if (SharkState == ESharkState::ES_CHASE)
 	{
-		if (FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation()) < STOP_CHASE_DISTANCE)
+		if (FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation()) > STOP_CHASE_DISTANCE)
+		{
 			SharkState = ESharkState::ES_PATROL_A;
+		}
 
 		// Condicion de perder
 		float distance = FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation());
@@ -125,7 +128,9 @@ void AShark::Tick(float DeltaTime)
 	if (SharkState == ESharkState::ES_PATROL_B || SharkState == ESharkState::ES_PATROL_A)
 	{
 		if (CheckSight())
+		{
 			SharkState = ESharkState::ES_CHASE;
+		}
 
 		Animate(ESharkAnimState::AS_SLOW);
 	}
@@ -157,7 +162,11 @@ void AShark::Animate(ESharkAnimState Anim)
 
 	AnimState = Anim;
 	if (Anim == ESharkAnimState::AS_SLOW && Mesh != nullptr)
+	{
 		Mesh->PlayAnimation(AnimSwimSlow, true);
+	}
 	if (Anim == ESharkAnimState::AS_FAST && Mesh != nullptr)
+	{
 		Mesh->PlayAnimation(AnimSwimFast, true);
+	}
 }

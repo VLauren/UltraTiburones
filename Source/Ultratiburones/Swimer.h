@@ -83,12 +83,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 		class UAnimationAsset* AnimSwim;
 
-	// Musicas
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
-		class USoundCue* MusicBase;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Sound)
-		class USoundCue* MusicAdditional;
-
 	ESwimerAnimState AnimState;
 
 	void Animate(ESwimerAnimState Anim);

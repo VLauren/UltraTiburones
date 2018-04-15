@@ -8,7 +8,7 @@ void USharkMovement::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ProvisionalMesh = ((AShark*)GetOwner())->ProvisionalMesh;
+	// ProvisionalMesh = ((AShark*)GetOwner())->ProvisionalMesh;
 	Mesh = ((AShark*)GetOwner())->Mesh;
 
 	// StartMeshRotation = ProvisionalMesh->RelativeRotation;

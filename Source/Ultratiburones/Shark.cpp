@@ -10,7 +10,7 @@ const float AShark::MOVEMENT_SPEED = 300.0f;
 
 const float SIGHT_ANGLE = 80;
 const float SIGHT_DISTANCE = 1500;
-const float SIGHT_DISTANCE_NO_ANGLE = 500;
+const float SIGHT_DISTANCE_NO_ANGLE = 800;
 const float STOP_CHASE_DISTANCE = 3000;
 
 
@@ -113,7 +113,7 @@ void AShark::Tick(float DeltaTime)
 		Animate(ESharkAnimState::AS_FAST);
 
 		// UE_LOG(LogTemp, Warning, TEXT("SetVolume!"));
-		USharkVolumeChange::Instance->SetVolume(1.0f);
+		// USharkVolumeChange::Instance->SetVolume(1.0f);
 	}
 	if (SharkState == ESharkState::ES_PATROL_A)
 	{

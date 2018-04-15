@@ -27,7 +27,6 @@ public:
 
 private:
 	class USkeletalMeshComponent* Mesh = nullptr;
-	class UStaticMeshComponent* ProvisionalMesh = nullptr;
 
 	FRotator StartMeshRotation;
 	FRotator CurrentRotation;

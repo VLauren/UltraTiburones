@@ -31,6 +31,6 @@ void USharkVolumeChange::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 void USharkVolumeChange::SetVolume(float volume)
 {
-	AudioComponent->VolumeMultiplier = volume;
+	// AudioComponent->VolumeMultiplier = volume;
 }
 

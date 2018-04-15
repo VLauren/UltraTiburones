@@ -10,6 +10,7 @@ const float AShark::MOVEMENT_SPEED = 300.0f;
 
 const float SIGHT_ANGLE = 80;
 const float SIGHT_DISTANCE = 1500;
+const float SIGHT_DISTANCE_NO_ANGLE = 500;
 const float STOP_CHASE_DISTANCE = 3000;
 
 
@@ -141,6 +142,9 @@ void AShark::Tick(float DeltaTime)
 bool AShark::CheckSight()
 {
 	float distance = FVector::Dist(GetActorLocation(), ASwimer::Instance->GetActorLocation());
+
+	if (distance <= SIGHT_DISTANCE_NO_ANGLE)
+		return true;
 
 	// FVector DirA = RootComponent->GetComponentRotation().Vector().GetSafeNormal();
 	FVector DirA = Movement->direccion;

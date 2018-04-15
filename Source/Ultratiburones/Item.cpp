@@ -29,6 +29,7 @@ AItem::AItem()
 		Mesh->bGenerateOverlapEvents = false;
 		Mesh->SetCanEverAffectNavigation(false);
 	}
+	ItemsToCollect = 0;
 }
 
 // Called when the game starts or when spawned
@@ -44,7 +45,8 @@ void AItem::BeginPlay()
 
 	// evento de overlap del hitbox
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnOverlap);
-	ItemsToCollect++;
+	CollectedItems = 0;
+	ItemsToCollect = 20;
 
 }
 

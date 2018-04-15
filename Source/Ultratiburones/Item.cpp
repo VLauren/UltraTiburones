@@ -37,8 +37,8 @@ void AItem::BeginPlay()
 	Super::BeginPlay();
 	
 	// visibilidad de colider
-	BoxCollision->SetVisibility(true);
-	BoxCollision->SetHiddenInGame(false);
+	// BoxCollision->SetVisibility(true);
+	// BoxCollision->SetHiddenInGame(false);
 
 	BoxCollision->bGenerateOverlapEvents = true;
 

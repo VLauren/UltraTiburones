@@ -28,6 +28,8 @@ ASwimer::ASwimer()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraArm, USpringArmComponent::SocketName);
 
+	// Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+
 	Mesh = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	if (Mesh)
 	{
@@ -43,6 +45,7 @@ ASwimer::ASwimer()
 		Mesh->SetCollisionProfileName(MeshCollisionProfileName);
 		Mesh->bGenerateOverlapEvents = false;
 		Mesh->SetCanEverAffectNavigation(false);
+		// Mesh->AttachTo(Arrow);
 	}
 
 	ProvisionalMesh = CreateOptionalDefaultSubobject<UStaticMeshComponent>(TEXT("ProvisionalMesh"));

@@ -8,8 +8,14 @@ void USwimerMovement::BeginPlay()
 
 	ProvisionalMesh = ((ASwimer*)GetOwner())->ProvisionalMesh;
 	Mesh = ((ASwimer*)GetOwner())->Mesh;
+	// Arrow = ((ASwimer*)GetOwner())->Arrow;
 
-	StartMeshRotation = ProvisionalMesh->RelativeRotation;
+	if(ProvisionalMesh != nullptr)
+		StartMeshRotation = ProvisionalMesh->RelativeRotation;
+	// if(Arrow != nullptr)
+		// StartMeshRotation = Arrow->RelativeRotation;
+	if(Mesh != nullptr)
+		StartMeshRotation = Mesh->RelativeRotation;
 }
 
 void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -40,11 +46,14 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 		FRotator ctrlRot = movimientoEsteFrame.Rotation();
 
 		FRotator TargetRotation = FRotator(ctrlRot.Roll, ctrlRot.Yaw, -ctrlRot.Pitch) + StartMeshRotation;
+		// FRotator TargetRotation = ctrlRot + StartMeshRotation;
 
 		CurrentRotation = FMath::Lerp(CurrentRotation, TargetRotation, 0.05f);
 
 		if(ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+		// if(Arrow != nullptr)
+			// Arrow->SetRelativeRotation(CurrentRotation);
 		if(Mesh != nullptr)
 			Mesh->SetRelativeRotation(CurrentRotation);
 
@@ -63,6 +72,8 @@ void USwimerMovement::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 
 		if(ProvisionalMesh != nullptr)
 			ProvisionalMesh->SetRelativeRotation(CurrentRotation);
+		// if(Arrow != nullptr)
+			// Arrow->SetRelativeRotation(CurrentRotation);
 		if(Mesh != nullptr)
 			Mesh->SetRelativeRotation(CurrentRotation);
 	}

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/ArrowComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "SwimerMovement.generated.h"
 
@@ -26,6 +27,7 @@ public:
 private:
 	class USkeletalMeshComponent* Mesh = nullptr;
 	class UStaticMeshComponent* ProvisionalMesh = nullptr;
+	// class UArrowComponent* Arrow = nullptr;
 
 	FRotator StartMeshRotation;
 	FRotator CurrentRotation;

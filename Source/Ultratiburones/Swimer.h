@@ -6,6 +6,7 @@
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/ArrowComponent.h"
 #include "Runtime/Engine/Classes/Sound/SoundCue.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -46,6 +47,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class USpringArmComponent* CameraArm;
+
+	// UPROPERTY(VisibleAnywhere)
+		// class UArrowComponent* Arrow = nullptr;
+
+	UPROPERTY(VisibleAnywhere)
+		class USceneComponent* Comp = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
 		class USkeletalMeshComponent* Mesh = nullptr;
